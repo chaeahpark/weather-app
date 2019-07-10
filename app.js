@@ -19,11 +19,22 @@ window.addEventListener("load", () => {
        })
        .then(data => {
          // get data of temperature and summary
-         const {temperature, summary} = data.currently;
+         const {temperature, summary, icon} = data.currently;
+
          temperatureDegree.textContent = temperature;
          temperatureDescription.textContent = summary;
          locationTimezone.textContent = data.timezone;
+
+         // set icon
+         setIcons(icon, document.querySelector(".icon"));
        })
     })
+  };
+
+  function setIcons(icon, iconID) {
+     const skycons = new Skycons({"color": "white"});
+     const currentIcon = icon.replace(/-/g, "_").toUpperCase();
+     skycons.play();
+     return skycons.set(iconID, Skycons[currentIcon])
   }
 })
